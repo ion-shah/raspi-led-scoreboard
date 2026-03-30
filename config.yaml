@@ -1,0 +1,81 @@
+# ============================================================
+# LED Scoreboard config.yaml
+# ============================================================
+
+# ------------------------------------------------------------
+# Hardware Settings
+# ------------------------------------------------------------
+hardware:
+  rows: 32                        # LED panel row count (32 or 64)
+  cols: 64                        # LED panel column count (64 typical)
+  chained: 2                      # Number of panels chained together
+  gpio_mapping: adafruit-hat      # adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
+  led_slowdown_gpio: 0            # Increase if display looks garbled (0-4)
+  brightness: 80                  # 0-100, overall brightness
+  pwm_bits: 11                    # 1-11, color depth (lower = faster refresh)
+
+
+# ------------------------------------------------------------
+# Display Settings
+# ------------------------------------------------------------
+display:
+  timezone: "America/New_York"    # Timezone for displaying game times
+                                  # Full list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  scene_duration: 15              # Seconds each game is shown before rotating
+  transition: slide               # slide | fade | cut
+  brightness_schedule:
+    enabled: false
+    day_brightness: 80            # Brightness during daytime hours
+    night_brightness: 30          # Brightness at night
+    day_start: "08:00"            # Time to switch to day brightness
+    night_start: "21:00"          # Time to switch to night brightness
+
+
+# ------------------------------------------------------------
+# Game Filtering
+# ------------------------------------------------------------
+scheduling:
+  pregame_lookahead_minutes: 20   # Show pregame this many minutes before game start
+  postgame_lookback_minutes: 20   # Keep showing final score this many minutes after game ends
+
+
+# ------------------------------------------------------------
+# Sports & Favorite Teams
+# ------------------------------------------------------------
+
+sports:
+  nba:
+    enabled: true
+    favorites:
+      - NYK
+      - LAC
+
+  nfl:
+    enabled: false
+    favorites:
+      - NYJ
+
+  mlb:
+    enabled: false
+    favorites:
+      - NYY
+
+  nhl:
+    enabled: false
+    favorites: 
+      - NYI
+
+  college_football:
+    enabled: false
+    favorites:
+      - GT
+
+  college_basketball:
+    enabled: false
+    favorites: 
+      - GT
+  
+  college_baseball:
+    enabled: false
+    favorites:
+      - GT
