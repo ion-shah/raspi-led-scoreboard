@@ -1,16 +1,16 @@
 #TODO import espn module
 
-from data import espn
+from data import fetchScoreboard, getScoreboardList, refreshGameList, buildGameDict
 
 # TEST 1
 # this test is to see if I am properly getting the data for a single sport
 testSport = "basketball"
 testLeague = "nba"
-api = espn.getJSON(espn.apiEndpoint(testSport, testLeague))
+api = fetchScoreboard(testSport, testLeague)
 
-games = espn.getScoreboardList(testSport, testLeague)
+games = buildGameDict(api, testSport)
 
-freshGames = espn.refreshGameList(games, espn.getJSON(espn.apiEndpoint(testSport, testLeague)), testSport)
+freshGames = refreshGameList(games, fetchScoreboard(testSport, testLeague), testSport)
 
 for game in freshGames.values():
     print(game)
