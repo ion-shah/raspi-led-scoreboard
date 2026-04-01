@@ -47,7 +47,7 @@ sports:
   nba:
     enabled: true
     favorites:
-      - NYK
+      - NY
       - LAC
 
   nfl:
@@ -65,17 +65,25 @@ sports:
     favorites: 
       - NYI
 
-  college_football:
+  college-football:
     enabled: false
     favorites:
       - GT
 
-  college_basketball:
+  college-basketball:
     enabled: false
     favorites: 
       - GT
   
-  college_baseball:
+  college-baseball:
     enabled: false
     favorites:
       - GT
+
+# ------------------------------------------------------------
+# Importance & Display Priority
+# ------------------------------------------------------------
+priority:
+  pin_threshold: 150        # Games at or above this score pause rotation and display statically
+  favorite_leagues:
+    - nba 

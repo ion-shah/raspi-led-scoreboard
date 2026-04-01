@@ -1,6 +1,9 @@
 #TODO import espn module
 
 from data import fetchScoreboard, getScoreboardList, refreshGameList, buildGameDict
+from utils import config_loader as loader
+
+import pprint
 
 # TEST 1
 # this test is to see if I am properly getting the data for a single sport
@@ -10,9 +13,18 @@ api = fetchScoreboard(testSport, testLeague)
 
 games = buildGameDict(api, testSport)
 
+for game in games.values():
+    print(game)
+
+print("--fetch test done--")
+
 freshGames = refreshGameList(games, fetchScoreboard(testSport, testLeague), testSport)
 
 for game in freshGames.values():
     print(game)
 
-print("done")
+print("--filtered games test done--")
+
+config = loader.loadConfig("config.yaml")
+
+print(pprint.pformat(config))

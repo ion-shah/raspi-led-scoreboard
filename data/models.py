@@ -8,6 +8,7 @@ class Team(object):
         self.name = abbreviation
         self.score = score
         self.deltaScore = deltaScore # this change is measured for animations
+        self.home = False            # TODO functionality needs to be added
         self.ranked = ranked         # for college sports
 
 # each sports game will be put into this class for organization
