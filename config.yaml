@@ -35,8 +35,8 @@ display:
 # Game Filtering
 # ------------------------------------------------------------
 scheduling:
-  pregame_lookahead_minutes: 20   # Show pregame this many minutes before game start
-  postgame_lookback_minutes: 20   # Keep showing final score this many minutes after game ends
+  pregame_lookahead_minutes: 30   # Show pregame this many minutes before game start
+  postgame_lookback_minutes: 80   # Keep showing final score this many minutes after game ends
 
 
 # ------------------------------------------------------------

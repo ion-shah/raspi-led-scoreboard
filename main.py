@@ -5,6 +5,8 @@ from utils import config_loader as loader
 
 import pprint
 
+config = loader.loadConfig("config.yaml")
+
 # TEST 1
 # this test is to see if I am properly getting the data for a single sport
 testSport = "basketball"
@@ -18,13 +20,14 @@ for game in games.values():
 
 print("--fetch test done--")
 
-freshGames = refreshGameList(games, fetchScoreboard(testSport, testLeague), testSport)
+freshGames = refreshGameList(games, fetchScoreboard(testSport, testLeague), testSport, config=config)
 
 for game in freshGames.values():
     print(game)
 
 print("--filtered games test done--")
 
-config = loader.loadConfig("config.yaml")
 
-print(pprint.pformat(config))
+
+#print(pprint.pformat(config))
+

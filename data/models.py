@@ -1,6 +1,7 @@
 # this file cotains all the classes for the data
 
 from datetime import datetime, timezone
+from data.importance import ImportanceMixin
 
 # this class will have some data for the team and its score for the game, and will be used in the Game class
 class Team(object):
@@ -13,7 +14,7 @@ class Team(object):
 
 # each sports game will be put into this class for organization
 # specific sports will inherit from the class, with info as needed
-class Game(object):
+class Game(ImportanceMixin, object):
     def __init__(self, gameID, sport, league, team1, team2, t1score, t2score, status, startTime, playoffs = False):
         self.gameID = gameID                   # ESPN api assigns a gameID to each event
         self.sport = sport                     #
@@ -52,7 +53,7 @@ class Game(object):
             if self.startTime is None:
                 return False
             minutes_until = (self.startTime - now).total_seconds() / 60
-            return 0 <= minutes_until <= lookahead_minutes
+            return minutes_until <= lookahead_minutes
 
         elif self.status == "post":
             return self.minutesSinceEnd() <= lookback_minutes
@@ -61,4 +62,4 @@ class Game(object):
     
     def __str__(self):
         # debugging string representation
-        return f"{self.team1.name} {self.team1.score} ||    || {self.team2.name} {self.team2.score}  || {self.status} | {self.startTime}"
+        return f"{self.team1.name} {self.team1.score} ||    || {self.team2.name} {self.team2.score}  || {self.status} | {self.startTime} || importance: {self.importance}"
