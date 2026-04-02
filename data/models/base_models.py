@@ -1,7 +1,7 @@
 # this file cotains all the classes for the data
 
 from datetime import datetime, timezone
-from data.importance import ImportanceMixin
+from data.models.importance import ImportanceMixin
 
 # this class will have some data for the team and its score for the game, and will be used in the Game class
 class Team(object):
@@ -38,7 +38,6 @@ class Game(ImportanceMixin, object):
             return 0
         delta = datetime.now(timezone.utc) - self.endTime
         return delta.total_seconds() / 60
-
         
     def isRelevant(self, lookahead_minutes=20, lookback_minutes=20):
         # this function checks if we care about the game based on the time
@@ -60,6 +59,23 @@ class Game(ImportanceMixin, object):
 
         return False
     
+    def updateFrom(self, event):
+        # Updates base fields from a fresh API event. every child class must extend this
+
+        comp = event["competitions"][0]
+        newt1score = comp["competitors"][0]["score"]
+        newt2score = comp["competitors"][1]["score"]
+
+        self.team1.deltaScore = str(int(newt1score or 0) - int(self.team1.score or 0))
+        self.team2.deltaScore = str(int(newt2score or 0) - int(self.team2.score or 0))
+        self.team1.score = newt1score
+        self.team2.score = newt2score
+
+        newStatus = comp["status"]["type"]["state"]
+        if newStatus == "post" and self.status != "post":
+            self.markEnded()
+        self.status = newStatus
+    
     def __str__(self):
         # debugging string representation
-        return f"{self.team1.name} {self.team1.score} ||    || {self.team2.name} {self.team2.score}  || {self.status} | {self.startTime} || importance: {self.importance}"
+        return f"{self.team1.name} {self.team1.score} ||    || {self.team2.name} {self.team2.score}  || {self.status} | {self.startTime} || importance: {self.importance} generic Game"

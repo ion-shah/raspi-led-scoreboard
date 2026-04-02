@@ -1,28 +1,59 @@
 # this file contains functions that parse the JSON data from the API and return Game objects
 
-from datetime import datetime, timezone
-from data.models import Game
+from data.models.base_models import Game
+from data.models.basketball_model import BasketballGame
+from utils.time_utils import parseDate
 
-def parseDate(dateStr):
-    # this function takes in a date string from the API and returns a datetime object
+LEAGUE_SPORT_MAP = {
+    "basketball" : ["nba", "mens-college-basketball"]
+    # add more sports as functionality expands
+}
+                
 
-    return datetime.strptime(dateStr, "%Y-%m-%dT%H:%MZ").replace(tzinfo=timezone.utc)
     
 def buildGame(event, sport, league):
     # returns a Game object from a provided JSON
     # expects data from ["events"]
 
-    gameID = event["id"]
-    team1 = event["competitions"][0]["competitors"][0]["team"]["abbreviation"]
-    team2 = event["competitions"][0]["competitors"][1]["team"]["abbreviation"]
-    t1score = event["competitions"][0]["competitors"][0]["score"]
-    t2score = event["competitions"][0]["competitors"][1]["score"]
-    status = event["competitions"][0]["status"]["type"]["state"] # pre, in, or post
-    startTime = parseDate(event["date"])
+    comp = event["competitions"][0]
+    status = comp["status"]["type"]["state"]
+    
+    base_args = dict(
+        gameID    = event["id"],
+        sport     = sport,
+        league    = league,
+        team1     = comp["competitors"][0]["team"]["abbreviation"],
+        team2     = comp["competitors"][1]["team"]["abbreviation"],
+        t1score   = comp["competitors"][0]["score"],
+        t2score   = comp["competitors"][1]["score"],
+        status    = status,
+        startTime = parseDate(event["date"]),
+        #TODO add checking for playoffs 
+    )
 
-    #TODO add checking for playoffs 
+    if league in LEAGUE_SPORT_MAP.get("basketball", []):
+        return _buildBasketballGame(comp, base_args)
+    
 
-    return Game(gameID, sport, league, team1, team2, t1score, t2score, status, startTime)
+    return Game(**base_args) #return generic Game if no sport-specific class exists
+
+
+#=====CHILD CLASS BUILDERS=====
+def _buildBasketballGame(comp, base_args):
+    status_block = comp["status"]
+    period   = status_block.get("period", 0)
+    clock    = status_block.get("displayClock", "")
+    timeDesc = status_block.get("type", {}).get("description", "")
+
+    return BasketballGame(
+        **base_args,
+        period    = period,
+        clock     = clock,
+        timeDesc = timeDesc
+    )
+
+
+# ==============================
     
 def buildGameDict(data, sport):
     # for a provided JSON this function will return a dictionary of type Game

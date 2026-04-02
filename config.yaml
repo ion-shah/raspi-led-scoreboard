@@ -36,7 +36,7 @@ display:
 # ------------------------------------------------------------
 scheduling:
   pregame_lookahead_minutes: 30   # Show pregame this many minutes before game start
-  postgame_lookback_minutes: 80   # Keep showing final score this many minutes after game ends
+  postgame_lookback_minutes: 60   # Keep showing final score this many minutes after game ends
 
 
 # ------------------------------------------------------------
@@ -84,6 +84,6 @@ sports:
 # Importance & Display Priority
 # ------------------------------------------------------------
 priority:
-  pin_threshold: 150        # Games at or above this score pause rotation and display statically
+  pin_threshold: 140        # Games at or above this score pause rotation and display statically
   favorite_leagues:
     - nba 

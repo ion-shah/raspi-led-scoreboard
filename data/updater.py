@@ -46,11 +46,38 @@ def refreshGameList(oldGames, freshData, sport, config):
 
     return oldGames    
 
-def getScoreboardList(sport, league, lookahead_minutes=20, lookback_minutes=20):
+def refreshGameList(oldGames, freshData, sport, config):
+    league = freshData["leagues"][0]["slug"]
+    freshIDs = set() # keeps track of unique gameIDs in the fresh data
+
+    for event in freshData["events"]:
+        gameID = event["id"]
+        freshIDs.add(gameID)
+
+        if gameID in oldGames:
+            oldGames[gameID].updateFrom(event)   # updates data specific to each sport
+        else:
+            oldGames[gameID] = buildGame(event, sport, league)
+
+        oldGames[gameID].calculateImportance(config) # calculate importance for all games after refresh
+
+    # prune irrelevant games
+    lookahead = config["scheduling"]["pregame_lookahead_minutes"]
+    lookback  = config["scheduling"]["postgame_lookback_minutes"]
+    for gameID in list(oldGames.keys()):
+        if gameID not in freshIDs or not oldGames[gameID].isRelevant(lookahead, lookback):
+            del oldGames[gameID]
+
+    return oldGames
+
+def getScoreboardList(sport, league, config):
     #this function returns a list of valid Game objects for display
+
+    lookahead = config["scheduling"]["pregame_lookahead_minutes"]
+    lookback  = config["scheduling"]["postgame_lookback_minutes"]
 
     data = fetchScoreboard(sport, league)
     if data is None:
         return []
     games = buildGameDict(data, sport)
-    return [g for g in games.values() if g.isRelevant(lookahead_minutes, lookback_minutes)]
+    return [g for g in games.values() if g.isRelevant(lookahead, lookback)]
