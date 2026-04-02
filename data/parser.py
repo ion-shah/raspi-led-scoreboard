@@ -9,8 +9,6 @@ LEAGUE_SPORT_MAP = {
     # add more sports as functionality expands
 }
                 
-
-    
 def buildGame(event, sport, league):
     # returns a Game object from a provided JSON
     # expects data from ["events"]

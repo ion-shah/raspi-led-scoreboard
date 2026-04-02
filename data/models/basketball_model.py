@@ -36,7 +36,7 @@ class BasketballGame(Game):
                 import pytz
                 local_tz = pytz.timezone(timezone_str)
                 local_time = self.startTime.astimezone(local_tz)
-                return local_time.strftime("%#I:%M %p") #change # to - when running on rasppi
+                return local_time.strftime("%I:%M %p").lstrip("0")
             return "PRE"
 
         elif self.status == "post":

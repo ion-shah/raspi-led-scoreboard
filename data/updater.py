@@ -4,49 +4,6 @@ from data.espn import fetchScoreboard
 from data.parser import buildGame, buildGameDict
 
 def refreshGameList(oldGames, freshData, sport, config):
-    # this function takes in a list of games and new data, and updates the list of games with the new data
-    # this is used to update the scores and status of games that are already in the list, and add new games that have started since the last refresh
-
-    league = freshData["leagues"][0]["slug"]
-    freshIDs = set() # keeps track of unique gameIDs
-
-    lookahead_minutes = config.get("scheduling", {}).get("pregame_lookahead_minutes", 20)
-    lookback_minutes = config.get("scheduling", {}).get("postgame_lookback_minutes", 20)
-
-    for newEvent in freshData["events"]:
-        gameID = newEvent["id"]
-        freshIDs.add(gameID)
-
-        newStatus = newEvent["competitions"][0]["status"]["type"]["state"]
-        newT1score = newEvent["competitions"][0]["competitors"][0]["score"]
-        newT2score = newEvent["competitions"][0]["competitors"][1]["score"]
-
-        if gameID in oldGames:
-            oldGames[gameID].team1.deltaScore = str( int(newT1score or 0) - int(oldGames[gameID].team1.score or 0) )
-            oldGames[gameID].team2.deltaScore = str( int(newT2score or 0) - int(oldGames[gameID].team2.score or 0) )
-            oldGames[gameID].team1.score = str(newT1score)
-            oldGames[gameID].team2.score = str(newT2score)
-
-            # check if game has ended
-            if newStatus == "post" and oldGames[gameID].status != "post":
-                oldGames[gameID].markEnded()
-            oldGames[gameID].status = newStatus
-
-            oldGames[gameID].calculateImportance(config) # recalculate importance based on new status
-                  
-        else:
-            #creates new game object
-            oldGames[gameID] = buildGame(newEvent, sport, league)
-            oldGames[gameID].calculateImportance(config) 
-
-    # this second pass removes any games that are irrelevant
-    for gameID in list(oldGames.keys()):
-        if gameID not in freshIDs or not oldGames[gameID].isRelevant(lookahead_minutes, lookback_minutes):
-            del oldGames[gameID]
-
-    return oldGames    
-
-def refreshGameList(oldGames, freshData, sport, config):
     league = freshData["leagues"][0]["slug"]
     freshIDs = set() # keeps track of unique gameIDs in the fresh data
 
@@ -81,3 +38,31 @@ def getScoreboardList(sport, league, config):
         return []
     games = buildGameDict(data, sport)
     return [g for g in games.values() if g.isRelevant(lookahead, lookback)]
+
+def getDisplayList(game_cache, config):
+    # Returns games sorted by importance, pinned games first.
+
+    games = list(game_cache.values())
+    pinned   = [g for g in games if g.isPinned(config)]
+    unpinned = [g for g in games if not g.isPinned(config)]
+    
+    pinned.sort(key=lambda g: g.importance, reverse=True)
+    unpinned.sort(key=lambda g: g.importance, reverse=True)
+
+    return pinned + unpinned
+
+def fetchAndRefresh(game_cache, sport, league, config):
+    # this function fetches the latest data and updates the game cache in place, then returns the updated cache
+
+    freshData = fetchScoreboard(sport, league)
+    if freshData is not None:
+        return refreshGameList(game_cache, freshData, sport, config)
+    else:
+        print(f"Failed to fetch data for {sport} {league}, keeping old data")
+        return game_cache
+
+def getPollInterval(game_cache, live_interval=10, idle_interval=30):
+    # Returns poll interval in seconds based on whether any games are live.
+
+    any_live = any(g.status == "in" for g in game_cache.values())
+    return live_interval if any_live else idle_interval
