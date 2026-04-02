@@ -54,8 +54,8 @@ class BasketballGame(Game):
         # Uses self.description (from ESPN status.type.description) as the
         # most reliable signal for between-quarter and halftime states.
 
-        if self.description:
-            desc = self.description.lower()
+        if self.timeDesc:
+            desc = self.timeDesc.lower()
             if "halftime" in desc:
                 return "HALF"
             if "end of" in desc:
