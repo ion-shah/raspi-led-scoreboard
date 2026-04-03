@@ -31,6 +31,7 @@ def make_matrix():
     opts = RGBMatrixOptions()
     opts.rows = 32
     opts.cols = 64
+    opts.chain_length = 2
     opts.gpio_mapping = 'adafruit-hat'       # change to adafruit-hat-pwm if you did the solder mod
     opts.brightness = 80
     opts.disable_hardware_pulsing = True      # needed on Pi Zero / Pi 4 without root PWM access
@@ -55,7 +56,7 @@ def bdf(name):
 
 def screen_jersey_sizes():
     """Jersey 20 at multiple sizes so you can pick what fits your panel."""
-    img = Image.new('RGB', (64, 32), (0, 0, 0))
+    img = Image.new('RGB', (128, 32), (0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # Row 1 — size 8: fits two lines of data easily
@@ -72,7 +73,7 @@ def screen_jersey_sizes():
 
 def screen_jersey_vs_bdf():
     """Side-by-side: Jersey 20 (left) vs a BDF font (right)."""
-    img = Image.new('RGB', (64, 32), (0, 0, 0))
+    img = Image.new('RGB', (128, 32), (0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # Left half — Jersey 20 size 10
@@ -97,7 +98,7 @@ def screen_jersey_vs_bdf():
 
 def screen_full_scoreboard_mock():
     """Realistic NBA scoreboard layout using Jersey 20."""
-    img = Image.new('RGB', (64, 32), (0, 0, 0))
+    img = Image.new('RGB', (128, 32), (0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # Team abbreviations — small, top row
@@ -122,7 +123,7 @@ def screen_antialiasing_closeup():
     Single large character so you can see antialiasing up close.
     Useful for judging whether gray edge pixels look good or muddy.
     """
-    img = Image.new('RGB', (64, 32), (0, 0, 0))
+    img = Image.new('RGB', (128, 32), (0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # One huge digit centered — exposes every antialiased edge pixel
@@ -133,7 +134,7 @@ def screen_antialiasing_closeup():
 
 def screen_color_on_black():
     """Different text colors to see how Jersey 20 reads on the panel."""
-    img = Image.new('RGB', (64, 32), (0, 0, 0))
+    img = Image.new('RGB', (128, 32), (0, 0, 0))
     d = ImageDraw.Draw(img)
 
     f = ttf(10)
