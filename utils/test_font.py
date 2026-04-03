@@ -45,6 +45,8 @@ FONT_DIR = os.path.join(os.path.dirname(__file__), '..', 'assets', 'fonts')
 
 def ttf(size):
     path = os.path.join(FONT_DIR, 'Jersey20-Regular.ttf')
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Font not found at: {os.path.abspath(path)}")
     return ImageFont.truetype(path, size)
 
 def bdf(name):
