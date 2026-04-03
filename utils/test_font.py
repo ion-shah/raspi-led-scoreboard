@@ -32,7 +32,7 @@ def make_matrix():
     opts.rows = 32
     opts.cols = 64
     opts.chain_length = 2
-    opts.gpio_mapping = 'adafruit-hat-pwm'    
+    opts.hardware_mapping = 'adafruit-hat-pwm'    
     opts.brightness = 80
     opts.disable_hardware_pulsing = True      # needed on Pi Zero / Pi 4 without root PWM access
     # opts.gpio_slowdown = 2                  # uncomment if you see flickering
