@@ -15,6 +15,7 @@ Controls:
   Press Ctrl+C to exit.
 """
 
+"""
 import time
 import sys
 import os
@@ -185,3 +186,66 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    """
+
+# utils/test_font.py
+
+import os
+import sys
+import time
+
+from PIL import Image, ImageDraw, ImageFont
+from rgbmatrix import RGBMatrix, RGBMatrixOptions
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+FONT_DIR     = os.path.join(PROJECT_ROOT, 'assets', 'fonts')
+
+print(f"Project root : {PROJECT_ROOT}")
+print(f"Font dir     : {FONT_DIR}")
+print(f"Fonts found  : {os.listdir(FONT_DIR)}")
+
+def make_matrix():
+    opts = RGBMatrixOptions()
+    opts.rows             = 32
+    opts.cols             = 64
+    opts.chain_length     = 2
+    opts.hardware_mapping = 'adafruit-hat-pwm'
+    opts.brightness       = 80
+    return RGBMatrix(options=opts)
+
+def show(matrix, img, seconds):
+    matrix.SetImage(img.convert('RGB'))
+    time.sleep(seconds)
+
+matrix = make_matrix()
+
+# ── Screen 1: BDF font ────────────────────────────────────────────────────────
+img = Image.new('RGB', (128, 32), (0, 0, 0))
+d   = ImageDraw.Draw(img)
+f   = ImageFont.load(os.path.join(FONT_DIR, '6x10.bdf'))
+d.text((2, 2),  'BDF FONT OK', font=f, fill=(0, 255, 0))
+d.text((2, 16), '6x10.bdf',    font=f, fill=(150, 150, 150))
+show(matrix, img, 4)
+print("Screen 1 done — BDF")
+
+# ── Screen 2: Jersey 20 TTF ───────────────────────────────────────────────────
+img = Image.new('RGB', (128, 32), (0, 0, 0))
+d   = ImageDraw.Draw(img)
+f   = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 16)
+d.text((2, 2), 'TTF FONT OK', font=f, fill=(255, 200, 0))
+show(matrix, img, 4)
+print("Screen 2 done — TTF")
+
+# ── Screen 3: Both together ───────────────────────────────────────────────────
+img = Image.new('RGB', (128, 32), (0, 0, 0))
+d   = ImageDraw.Draw(img)
+f_bdf = ImageFont.load(os.path.join(FONT_DIR, '6x10.bdf'))
+f_ttf = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 14)
+d.text((2,  1), 'BDF: 108',  font=f_bdf, fill=(255, 255, 255))
+d.text((2, 17), 'TTF: 108',  font=f_ttf, fill=(255, 200, 0))
+show(matrix, img, 4)
+print("Screen 3 done — both")
+
+matrix.Clear()
+print("All done.")
