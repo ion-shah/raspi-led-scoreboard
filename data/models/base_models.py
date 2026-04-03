@@ -5,8 +5,9 @@ from data.models.importance import ImportanceMixin
 
 # this class will have some data for the team and its score for the game, and will be used in the Game class
 class Team(object):
-    def __init__(self, abbreviation, score, deltaScore = 0, ranked = 0):
-        self.name = abbreviation
+    def __init__(self, teamName, abbreviation, score, deltaScore = 0, ranked = 0):
+        self.name = teamName         # i.e Knicks
+        self.abbr = abbreviation     # i.e NY or NYK
         self.score = score
         self.deltaScore = deltaScore # this change is measured for animations
         self.home = False            # TODO functionality needs to be added
@@ -15,17 +16,17 @@ class Team(object):
 # each sports game will be put into this class for organization
 # specific sports will inherit from the class, with info as needed
 class Game(ImportanceMixin, object):
-    def __init__(self, gameID, sport, league, team1, team2, t1score, t2score, status, startTime, playoffs = False):
-        self.gameID = gameID                   # ESPN api assigns a gameID to each event
-        self.sport = sport                     #
-        self.league = league                   #
-        self.team1 = Team(team1, t1score)      #
-        self.team2 = Team(team2, t2score)      #
-        self.status = status                   # pre, in, post
-        self.startTime = startTime             # datetime object
-        self.endTime = None                    # datetime object
-        self.playoffs = playoffs               # TODO functionality needs to added
-        self.importance = 0                    # will be populated to determine which game to display
+    def __init__(self, gameID, sport, league, team1name, team2name, team1abbr, team2abbr, t1score, t2score, status, startTime, playoffs = False):
+        self.gameID = gameID                                  # ESPN api assigns a gameID to each event
+        self.sport = sport                                    #
+        self.league = league                                  #
+        self.team1 = Team(team1name, team1abbr, t1score)      #
+        self.team2 = Team(team2name, team2abbr, t2score)      #
+        self.status = status                                  # pre, in, post
+        self.startTime = startTime                            # datetime object
+        self.endTime = None                                   # datetime object
+        self.playoffs = playoffs                              # TODO functionality needs to added
+        self.importance = 0                                   # will be populated to determine which game to display
 
     def markEnded(self):
         # marks the time when the game ends 

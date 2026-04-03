@@ -3,11 +3,12 @@ from data.models.base_models import Game
 from utils.time_utils import parseDate
 
 class BasketballGame(Game):
-    def __init__(self, gameID, sport, league, team1, team2,
+    def __init__(self, gameID, sport, league, 
+                 team1name, team2name, team1abbr, team2abbr,
                  t1score, t2score, status, startTime,
                  period=0, clock="", timeDesc="", playoffs=False):
         
-        super().__init__(gameID, sport, league, team1, team2,
+        super().__init__(gameID, sport, league, team1name, team2name, team1abbr, team2abbr,
                          t1score, t2score, status, startTime, playoffs)
         
         self.period = period        # int, 1-4 for regulation, 5+ for OT
@@ -65,7 +66,7 @@ class BasketballGame(Game):
                 return f"{self.periodLabel()}"
 
         # clock is empty or zero with no useful description
-        clock_is_empty = not self.clock or self.clock in ("0:00", "00:00", '0.0' "")
+        clock_is_empty = not self.clock or self.clock in ("0:00", "00:00", "0.0", "")
         if clock_is_empty:
             if self.period == 2:
                 return "HALF"
