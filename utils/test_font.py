@@ -15,7 +15,7 @@ Controls:
   Press Ctrl+C to exit.
 """
 
-"""
+
 import time
 import sys
 import os
@@ -187,7 +187,6 @@ def main():
 if __name__ == '__main__':
     main()
 
-    """
 
 # utils/test_font.py
 
@@ -220,32 +219,35 @@ def show(matrix, img, seconds):
 
 matrix = make_matrix()
 
-# ── Screen 1: BDF font ────────────────────────────────────────────────────────
+# ── Screen 1: Jersey 20 small (replaces BDF test) ─────────────────────────────
 img = Image.new('RGB', (128, 32), (0, 0, 0))
 d   = ImageDraw.Draw(img)
-f   = ImageFont.load(os.path.join(FONT_DIR, '6x10.bdf'))
-d.text((2, 2),  'BDF FONT OK', font=f, fill=(0, 255, 0))
-d.text((2, 16), '6x10.bdf',    font=f, fill=(150, 150, 150))
+f   = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 10)
+d.text((2, 2),  'TTF SMALL OK', font=f, fill=(0, 255, 0))
+d.text((2, 16), 'size 10',      font=f, fill=(150, 150, 150))
 show(matrix, img, 4)
-print("Screen 1 done — BDF")
+print("Screen 1 done — TTF small")
 
-# ── Screen 2: Jersey 20 TTF ───────────────────────────────────────────────────
+# ── Screen 2: Jersey 20 large ─────────────────────────────────────────────────
 img = Image.new('RGB', (128, 32), (0, 0, 0))
 d   = ImageDraw.Draw(img)
 f   = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 16)
-d.text((2, 2), 'TTF FONT OK', font=f, fill=(255, 200, 0))
+d.text((2, 2), 'TTF LARGE OK', font=f, fill=(255, 200, 0))
 show(matrix, img, 4)
-print("Screen 2 done — TTF")
+print("Screen 2 done — TTF large")
 
-# ── Screen 3: Both together ───────────────────────────────────────────────────
+# ── Screen 3: Scoreboard mock ─────────────────────────────────────────────────
 img = Image.new('RGB', (128, 32), (0, 0, 0))
 d   = ImageDraw.Draw(img)
-f_bdf = ImageFont.load(os.path.join(FONT_DIR, '6x10.bdf'))
-f_ttf = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 14)
-d.text((2,  1), 'BDF: 108',  font=f_bdf, fill=(255, 255, 255))
-d.text((2, 17), 'TTF: 108',  font=f_ttf, fill=(255, 200, 0))
+f_sm = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 10)
+f_lg = ImageFont.truetype(os.path.join(FONT_DIR, 'Jersey20-Regular.ttf'), 16)
+d.text((2,  1), 'LAL',  font=f_sm, fill=(180, 140, 60))
+d.text((2,  12), '108', font=f_lg, fill=(255, 255, 255))
+d.text((90, 1), 'BOS',  font=f_sm, fill=(0, 160, 60))
+d.text((90, 12), '112', font=f_lg, fill=(255, 255, 255))
+d.text((52, 8), 'Q3',   font=f_sm, fill=(150, 150, 150))
 show(matrix, img, 4)
-print("Screen 3 done — both")
+print("Screen 3 done — mock scoreboard")
 
 matrix.Clear()
 print("All done.")
