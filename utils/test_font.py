@@ -43,6 +43,8 @@ def make_matrix():
 
 FONT_DIR = os.path.join(os.path.dirname(__file__), '..', 'assets', 'fonts')
 
+FONT_DIR = '/home/pion/raspi-led-scoreboard/assets/fonts'
+
 def ttf(size):
     path = os.path.join(FONT_DIR, 'Jersey20-Regular.ttf')
     if not os.path.exists(path):
@@ -53,6 +55,8 @@ def bdf(name):
     path = os.path.join(FONT_DIR, name)
     return ImageFont.load(path)
 
+print(f"FONT_DIR = {FONT_DIR}")
+print(f"Files: {os.listdir(FONT_DIR)}")
 
 # ── Individual test screens ────────────────────────────────────────────────────
 
