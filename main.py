@@ -66,6 +66,7 @@ while True:
             if now - last_switch_time >= DISPLAY_INTERVAL:
                 rotation_index = (rotation_index + 1) % len(display_list)
                 last_switch_time = now
+                print(f"[ROTATE] switched to next game in rotation")
 
         print(current_game)
         print(f"  clock:      {current_game.displayClock(config['display']['timezone'])}")
