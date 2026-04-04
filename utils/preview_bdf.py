@@ -10,7 +10,10 @@ import sys
 import os
 import time
 
-from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
+try:
+    from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
+except ImportError:
+    from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 
 if len(sys.argv) < 2:
     print("Usage: sudo venv/bin/python utils/preview_bdf.py assets/fonts/6x10.bdf")
