@@ -6,7 +6,6 @@ ABBREVIATION_OVERRIDES = {
         "GS":  "GSW",
         "SA":  "SAS",
         "NO":  "NOP",
-        "UTAH": "UTA",
     },
     "nfl": {},
     "mlb": {},
