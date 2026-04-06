@@ -1,11 +1,11 @@
 
 try:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-    BdfFont = None
 except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
-    from bdfparser import Font as BdfFont
+    
+from bdfparser import Font as BdfFont
 
 __all__ = [
     "BaseScene",

@@ -8,11 +8,11 @@ from scenes.base_scene import *
 
 try:
     from rgbmatrix import graphics
-    BdfFont = None
 except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import graphics
-    from bdfparser import Font as BdfFont
+    
+from bdfparser import Font as BdfFont
 
 
 def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
@@ -37,9 +37,6 @@ def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
 
     # ── Double size: render to Pillow via bdfparser, scale 2x, push to canvas ─
     #from bdfparser import Font as BdfFont
-    if BdfFont is None:
-        raise RuntimeError("double=True requires bdfparser, only supported on emulator")
-        #TODO add double functionality
     bdf    = font_data.bdf
     g = bdf.glyph('0')
 
