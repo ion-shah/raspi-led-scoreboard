@@ -8,14 +8,12 @@ from scenes.base_scene import *
 
 try:
     from rgbmatrix import graphics
+    BdfFont = None
 except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import graphics
-
-try:
     from bdfparser import Font as BdfFont
-except ImportError:
-    BdfFont = None
+
 
 def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
     # Draw BDF text onto canvas with custom letter spacing.

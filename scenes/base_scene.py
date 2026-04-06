@@ -1,6 +1,7 @@
 
 try:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
+    BdfFont = None
 except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
@@ -23,7 +24,7 @@ class FontData:
         font.LoadFont(font_path)
         self.font = font
 
-        self.bdf = BdfFont(font_path)   # loaded once, reused everywhere
+        self.bdf = BdfFont(font_path) if BdfFont is not None else None
 #this font is used for the large score displays
 JERSEY20_FONT = FontData(
     font_name = "Jersey20-custom",
