@@ -41,6 +41,7 @@ def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
     #from bdfparser import Font as BdfFont
     if BdfFont is None:
         raise RuntimeError("double=True requires bdfparser, only supported on emulator")
+        #TODO add double functionality
     bdf    = font_data.bdf
     g = bdf.glyph('0')
 
