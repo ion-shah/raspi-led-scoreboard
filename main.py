@@ -61,45 +61,49 @@ rotation_index   = 0
 last_poll_time   = time.time()
 last_switch_time = time.time()
 
-while True:
-    now = time.time()
+try:
+    while True:
+        now = time.time()
 
-    # -- Poll always runs first, every cycle if interval elapsed --
-    if now - last_poll_time >= getPollInterval(game_cache, live_interval=LIVE_POLL_INTERVAL, idle_interval=IDLE_POLL_INTERVAL):
-        #print(f"[POLL] fetching...")
-        for sport, league in enabled:
-            game_cache = fetchAndRefresh(game_cache, sport, league, config)
-        last_poll_time = now
-        #print(f"[POLL] cache has {len(game_cache)} games")
+        # -- Poll always runs first, every cycle if interval elapsed --
+        if now - last_poll_time >= getPollInterval(game_cache, live_interval=LIVE_POLL_INTERVAL, idle_interval=IDLE_POLL_INTERVAL):
+            #print(f"[POLL] fetching...")
+            for sport, league in enabled:
+                game_cache = fetchAndRefresh(game_cache, sport, league, config)
+            last_poll_time = now
+            #print(f"[POLL] cache has {len(game_cache)} games")
 
-    # -- Build display list --
-    display_list = getDisplayList(game_cache, config)
+        # -- Build display list --
+        display_list = getDisplayList(game_cache, config)
 
-    # -- Render --
-    if not display_list:
-        #print(f"No relevant games — showing clock")
-        renderer.render(ClockScene())
-    else:
-        # pinned game overrides rotation
-        if display_list[0].isPinned(config):
-            current_game = display_list[0]
+        # -- Render --
+        if not display_list:
+            #print(f"No relevant games — showing clock")
+            renderer.render(ClockScene())
         else:
-            rotation_index = rotation_index % len(display_list)
-            current_game = display_list[rotation_index]
+            # pinned game overrides rotation
+            if display_list[0].isPinned(config):
+                current_game = display_list[0]
+            else:
+                rotation_index = rotation_index % len(display_list)
+                current_game = display_list[rotation_index]
 
-            if now - last_switch_time >= DISPLAY_INTERVAL:
-                rotation_index = (rotation_index + 1) % len(display_list)
-                last_switch_time = now
-                #print(f"[ROTATE] switched to next game in rotation")
+                if now - last_switch_time >= DISPLAY_INTERVAL:
+                    rotation_index = (rotation_index + 1) % len(display_list)
+                    last_switch_time = now
+                    #print(f"[ROTATE] switched to next game in rotation")
 
-        #debug statements
-        #print(current_game)
-        #print(f"  clock:      {current_game.displayClock(config['display']['timezone'])}")
-        #print(f"  period:     {current_game.periodLabel()}")
-        #print(f"  importance: {current_game.importance}")
-        #print(f"  pinned:     {current_game.isPinned(config)}")
+            #debug statements
+            #print(current_game)
+            #print(f"  clock:      {current_game.displayClock(config['display']['timezone'])}")
+            #print(f"  period:     {current_game.periodLabel()}")
+            #print(f"  importance: {current_game.importance}")
+            #print(f"  pinned:     {current_game.isPinned(config)}")
 
-        renderer.render(getScene(current_game, tz))
+            renderer.render(getScene(current_game, tz))
 
-    matrix.SwapOnVSync(canvas)
-    time.sleep(0.05)
+        matrix.SwapOnVSync(canvas)
+        time.sleep(0.05)
+
+except KeyboardInterrupt:
+    print("Program stopped by user")
