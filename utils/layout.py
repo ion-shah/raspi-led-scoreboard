@@ -7,10 +7,12 @@ from PIL import Image, ImageDraw, ImageFont
 from scenes.base_scene import *
 
 try:
-    from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
+    from rgbmatrix import graphics
+    BdfFont = None
 except ImportError:
     print("RGBMatrix library not found, using emulator.")
-    from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
+    from RGBMatrixEmulator import graphics
+    from bdfparser import Font as BdfFont
 
 
 def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
@@ -35,7 +37,9 @@ def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
 
     # ── Double size: render to Pillow via bdfparser, scale 2x, push to canvas ─
     #from bdfparser import Font as BdfFont
-
+    if BdfFont is None:
+        raise RuntimeError("double=True requires bdfparser, only supported on emulator")
+        #TODO add double functionality
     bdf    = font_data.bdf
     g = bdf.glyph('0')
 
@@ -167,7 +171,7 @@ def textCoordsLeft(font_data, text, left_x, y, double=False):
 
     #left_x : the x coordinate you want the text to start at
     #y      : vertical position (same meaning as in text_coords)
-    
+
     scale    = 2 if double else 1
     baseline = font_data.font.baseline * scale
     height   = font_data.font.height   * scale
