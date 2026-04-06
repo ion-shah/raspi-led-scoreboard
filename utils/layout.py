@@ -4,8 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from PIL import Image, ImageDraw, ImageFont
-import time, math
-from scenes.base_scene import FontData, jersey20_font, small_bdf_font
+from scenes.base_scene import *
 
 try:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
@@ -13,13 +12,11 @@ except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 
-def draw_text_spaced(canvas, font_data, x, y, color, text, double=False):
 
-
-    """
-    Draw BDF text onto canvas with custom letter spacing.
-    double=True renders at 2x size using nearest-neighbor scaling.
-    """
+def drawTextSpaced(canvas, font_data, x, y, color, text, double=False):
+    # Draw BDF text onto canvas with custom letter spacing.
+    # double=True renders at 2x size using nearest-neighbor scaling.
+    
     fill = (color.red, color.green, color.blue)
     font = font_data.font
     font_path = font_data.font_path
@@ -83,7 +80,7 @@ def draw_text_spaced(canvas, font_data, x, y, color, text, double=False):
 
     return x + native_w * 2
 
-def get_text_width(font_data, text, double=False):
+def getTextWidth(font_data, text, double=False):
     spacing = font_data.glyphSpacing
     native_w = 0
     for char in text:
@@ -94,80 +91,83 @@ def get_text_width(font_data, text, double=False):
     return native_w * 2 if double else native_w
 
 
-def image_y_offset(canvas_height, image_height):
-    """
-    Returns the offset_y to vertically center an image on the canvas.
-    Pass this to canvas.SetImage(img, offset_x, offset_y).
+def imgOffsetY(canvas_height, image_height):
+    #Returns the offset_y to vertically center an image on the canvas.
+    #Pass this to canvas.SetImage(img, offset_x, offset_y).
     
-    canvas_height : canvas.height  (32)
-    image_height  : the height of the PIL image after resizing
-    """
+    #canvas_height : canvas.height  (32)
+    #image_height  : the height of the PIL image after resizing
+
     return (canvas_height - image_height) // 2
 
 
-def image_x_offsets(canvas_width, image_width, padding=2):
-    """
-    Returns (left_x, right_x) offsets to place two images on opposite sides.
-    Pass these to canvas.SetImage(img, offset_x, offset_y).
+def imgOffsetsX(canvas_width, image_width, padding=2):
+    #Returns (left_x, right_x) offsets to place two images on opposite sides.
+    #Pass these to canvas.SetImage(img, offset_x, offset_y).
 
-    canvas_width : canvas.width  (128)
-    image_width  : width of the image (assumes both images same width)
-    padding      : pixels between image edge and canvas edge
-    """
+    #canvas_width : canvas.width  (128)
+    #image_width  : width of the image (assumes both images same width)
+    #padding      : pixels between image edge and canvas edge
+
     left_x  = padding
     right_x = canvas_width - image_width - padding
     return left_x, right_x
 
+def drawImage(canvas, img_path, img_size, padding, right_image):
+    y = imgOffsetY(canvas.height, img_size)
+    x1, x2 = imgOffsetsX(canvas.width, img_size, padding)
+    x = x2 if right_image else x1
 
-def text_coords_center(font_data, text, center_x, center_y, double=False):
-    """
-    Given a center point on the canvas, returns the (x, y) to pass to
-    draw_text_spaced so the text is visually centered on that point.
+    img = Image.open(img_path).convert('RGB')
+    img = img.resize((img_size, img_size), Image.LANCZOS)
 
-    The returned y accounts for the BDF baseline offset — you should pass
-    it directly to draw_text_spaced without any further adjustment.
+    canvas.SetImage(img, x, y) 
 
-    center_x : horizontal center you want the text to appear at
-    center_y : vertical center you want the text to appear at
-    double   : set True if you're calling draw_text_spaced with double=True
-    """
+def textCoordsCenter(font_data, text, center_x, center_y, double=False):
+    #Given a center point on the canvas, returns the (x, y) to pass to
+    #drawTextSpaced so the text is visually centered on that point.
+
+    #The returned y accounts for the BDF baseline offset — you should pass
+    #it directly to drawTextSpaced without any further adjustment.
+
+    #center_x : horizontal center you want the text to appear at
+    #center_y : vertical center you want the text to appear at
+    #double   : set True if you're calling drawTextSpaced with double=True
 
     scale    = 2 if double else 1
     baseline = font_data.font.baseline * scale
     height   = font_data.font.height   * scale
-    width    = get_text_width(font_data, text, double=double)
+    width    = getTextWidth(font_data, text, double=double)
 
     x = center_x - round(width / 2) -1
     y = center_y + height // 2 - (height - baseline)
 
     return x, y
 
-def text_coords_right(font_data, text, right_x, y, double=False):
-    """
-    Returns (x, y) to pass to draw_text_spaced so the text's right edge
-    lands at right_x.
+def textCoordsRight(font_data, text, right_x, y, double=False):
+    #Returns (x, y) to pass to drawTextSpaced so the text's right edge
+    #lands at right_x.
 
-    right_x : the x coordinate you want the text to end at
-    y       : vertical position (same meaning as in text_coords)
-    """
+    #right_x : the x coordinate you want the text to end at
+    #y       : vertical position (same meaning as in text_coords)
+
     scale    = 2 if double else 1 
     baseline = font_data.font.baseline * scale
     height   = font_data.font.height   * scale
-    width    = get_text_width(font_data, text, double=double)
+    width    = getTextWidth(font_data, text, double=double)
 
     x = right_x - width
     y = y + height // 2 - (height - baseline)
 
     return x, y
 
-def text_coords_left(font_data, text, left_x, y, double=False):
-    """
-    Returns (x, y) to pass to draw_text_spaced so the text's left edge
-    starts at left_x.
+def textCoordsLeft(font_data, text, left_x, y, double=False):
+    #Returns (x, y) to pass to drawTextSpaced so the text's left edge
+    #starts at left_x.
 
-    left_x : the x coordinate you want the text to start at
-    y      : vertical position (same meaning as in text_coords)
-    """
+    #left_x : the x coordinate you want the text to start at
+    #y      : vertical position (same meaning as in text_coords)
+    
     scale    = 2 if double else 1
     baseline = font_data.font.baseline * scale
     height   = font_data.font.height   * scale
@@ -177,15 +177,16 @@ def text_coords_left(font_data, text, left_x, y, double=False):
 
     return x, y
 
-def draw_font(canvas, font_data, text, x, y, color, alignment="centered", double=False):
+def drawFont(canvas, font_data, text, x, y, color, alignment="centered", double=False):
+    
     a = alignment.lower()
     if a in ["left", 'l']:
-        location = text_coords_left(font_data, text, x, y, double=double)
+        location = textCoordsLeft(font_data, text, x, y, double=double)
     elif a in ["right", "r"]:
-        location = text_coords_right(font_data, text, x, y, double=double)
+        location = textCoordsRight(font_data, text, x, y, double=double)
     else:
-        location = text_coords_center(font_data, text, x, y, double=double)
+        location = textCoordsCenter(font_data, text, x, y, double=double)
 
     newx, newy = location
 
-    draw_text_spaced(canvas, font_data, newx, newy, color, text, double=double)
+    drawTextSpaced(canvas, font_data, newx, newy, color, text, double=double)

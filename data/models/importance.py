@@ -47,6 +47,6 @@ class ImportanceMixin:
         )
 
     def isPinned(self, config):
-        """Returns True if this game should pause the display rotation."""
+        # Returns True if this game should pause the display rotation. 
         threshold = config.get("priority", {}).get("pin_threshold", 150)
         return self.importance >= threshold
