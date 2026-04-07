@@ -106,7 +106,7 @@ try:
             renderer.render(getScene(current_game, tz), cache_key=None)
 
         renderer.swap(matrix)
-        time.sleep(0.05)
+        #time.sleep(0.05)
 
 except KeyboardInterrupt:
     print("Program stopped by user")
