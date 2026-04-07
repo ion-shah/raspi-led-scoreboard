@@ -13,6 +13,8 @@ except ImportError:
 LIVE_POLL_INTERVAL = 5   # seconds between API polls when games are live
 IDLE_POLL_INTERVAL = 30  # seconds between API polls when no games are live
 
+TICK_SPEED = 0.5
+
 # ====== initialization ======
 print( "\n===============================\n"
       +"===     LED SCOREBOARD      ===\n"
@@ -123,7 +125,7 @@ try:
             renderer.render(getScene(current_game, tz), cache_key=None)
 
         renderer.swap(matrix)
-        #time.sleep(0.05)
+        time.sleep(TICK_SPEED)
 
 except KeyboardInterrupt:
     print("Program stopped by user")
