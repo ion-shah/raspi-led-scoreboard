@@ -10,7 +10,7 @@ except ImportError:
     print("RGBMatrix library not found, using emulator.")
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
 
-LIVE_POLL_INTERVAL = 5   # seconds between API polls when games are live
+LIVE_POLL_INTERVAL = 3   # seconds between API polls when games are live
 IDLE_POLL_INTERVAL = 30  # seconds between API polls when no games are live
 
 TICK_SPEED = 0.5
