@@ -46,7 +46,7 @@ class BasketballGame(Game):
             return "FINAL"
 
         elif self.status == "in":
-            return self.periodLabel() +" "+ self._liveClockString()
+            return self.periodLabel() + self._liveClockString()
 
         return ""
 
@@ -58,12 +58,12 @@ class BasketballGame(Game):
         if self.timeDesc:
             desc = self.timeDesc.lower()
             if "halftime" in desc:
-                return "HALF"
+                return " HALF"
             if "end of" in desc:
-                # "End of 1st Quarter" → "END Q1"
-                return f"END {self.periodLabel()}"
+                # "End of 1st Quarter" -> "END", Q1 added in displayClock
+                return " END"
             if "overtime" in desc and not self.clock:
-                return f"{self.periodLabel()}"
+                return ""
 
         # clock is empty or zero with no useful description
         clock_is_empty = not self.clock or self.clock in ("0:00", "00:00", "0.0", "")
@@ -71,11 +71,11 @@ class BasketballGame(Game):
             if self.period == 2:
                 return "HALF"
             elif self.period > 0:
-                return f"END {self.periodLabel()}"
+                return f"END"
             return "LIVE"
 
         # normal in-progress state — just show the clock
-        return self.clock
+        return " "+self.clock
     
     def updateFrom(self, event):
         super().updateFrom(event)
