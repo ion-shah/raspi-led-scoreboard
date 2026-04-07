@@ -46,7 +46,7 @@ class BasketballGame(Game):
             return "FINAL"
 
         elif self.status == "in":
-            return self.periodLabel + self._liveClockString()
+            return self.periodLabel() +" "+ self._liveClockString()
 
         return ""
 

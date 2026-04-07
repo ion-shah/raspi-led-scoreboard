@@ -100,7 +100,7 @@ try:
             #print(f"  importance: {current_game.importance}")
             #print(f"  pinned:     {current_game.isPinned(config)}")
 
-            renderer.render(getScene(current_game, tz), cache_key=current_game.gameId)
+            renderer.render(getScene(current_game, tz), cache_key=current_game.gameID)
 
         renderer.swap(matrix)
         time.sleep(0.05)
