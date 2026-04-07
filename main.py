@@ -102,7 +102,7 @@ try:
 
             renderer.render(getScene(current_game, tz))
 
-        matrix.SwapOnVSync(canvas)
+        renderer.swap(matrix)
         time.sleep(0.05)
 
 except KeyboardInterrupt:

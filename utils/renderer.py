@@ -13,3 +13,6 @@ class Renderer:
                 drawImage(**drawing.__dict__, canvas=self.canvas)
             elif isinstance(drawing, FontArgs):
                 drawFont(**drawing.__dict__, canvas=self.canvas)
+    def swap(self, matrix):
+        self.canvas = matrix.SwapOnVSync(self.canvas)
+        return self.canvas
