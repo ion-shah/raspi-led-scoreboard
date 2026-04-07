@@ -9,10 +9,10 @@ hardware:
   rows: 32                        # LED panel row count (32 or 64)
   cols: 64                        # LED panel column count (64 typical)
   chained: 2                      # Number of panels chained together
-  gpio_mapping: adafruit-hat-pwm  # regular adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
+  gpio_mapping: "adafruit-hat-pwm" # regular adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
   led_slowdown_gpio: 4            # Increase if display looks garbled (0-4)
   brightness: 80                  # 0-100, overall brightness
-  pwm_bits: 11                    # 1-11, color depth (lower = faster refresh)
+  pwm_bits: 8                    # 1-11, color depth (lower = faster refresh)
   rgb_mapping: "GBR"
 
 
@@ -36,7 +36,7 @@ display:
 # Game Filtering
 # ------------------------------------------------------------
 scheduling:
-  pregame_lookahead_minutes: 360   # Show pregame this many minutes before game start
+  pregame_lookahead_minutes: 1000   # Show pregame this many minutes before game start
   postgame_lookback_minutes: 60   # Keep showing final score this many minutes after game ends
 
 
