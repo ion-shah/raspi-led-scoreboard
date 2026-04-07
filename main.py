@@ -61,7 +61,7 @@ for sport, league in enabled:
 print("\n\nEntering main loop...\n")
 
 rotation_index   = 0
-last_poll_time   = time.time()
+last_poll_time   = 0
 last_switch_time = time.time()
 
 try:
