@@ -30,7 +30,7 @@ class BasketballScene(BaseScene):
                 "team1abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team1.abbr), 59, 28, grey, 'r'),
                 "team2abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team2.abbr), 66, 28, grey, 'l'),
 
-                "clock": FontArgs(SMALL_FONT), BasketballData.displayClock(timezone), 66, 4, grey)
+                "clock": FontArgs(SMALL_FONT, BasketballData.displayClock(timezone), 66, 4, grey)
             }
 
 

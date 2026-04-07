@@ -140,7 +140,7 @@ def textCoordsCenter(font_data, text, center_x, center_y, double=False):
     height   = font_data.font.height   * scale
     width    = getTextWidth(font_data, text, double=double)
 
-    x = center_x - round(width / 2) -1
+    x = center_x - round(width / 2) 
     y = center_y + height // 2 - (height - baseline)
 
     return x, y
