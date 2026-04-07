@@ -6,7 +6,13 @@ class Renderer:
     def __init__(self, canvas, timezone):
         self.canvas = canvas
         self.timezone = timezone
-    def render(self, scene):
+        self._last_key = None
+    def render(self, scene, cache_key=None):
+        if cache_key is not None and cache_key == self._last_key:
+            #if same scene, do not redraw or clear
+            return
+        self._last_key = cache_key
+
         self.canvas.Clear()
         for drawing in scene.drawings.values():
             if isinstance(drawing, ImgArgs):

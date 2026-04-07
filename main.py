@@ -79,7 +79,7 @@ try:
         # -- Render --
         if not display_list:
             #print(f"No relevant games — showing clock")
-            renderer.render(ClockScene())
+            renderer.render(ClockScene(), cache_key=None)
         else:
             # pinned game overrides rotation
             if display_list[0].isPinned(config):
@@ -100,7 +100,7 @@ try:
             #print(f"  importance: {current_game.importance}")
             #print(f"  pinned:     {current_game.isPinned(config)}")
 
-            renderer.render(getScene(current_game, tz))
+            renderer.render(getScene(current_game, tz), cache_key=current_game.gameId)
 
         renderer.swap(matrix)
         time.sleep(0.05)
