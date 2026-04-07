@@ -140,7 +140,7 @@ def textCoordsCenter(font_data, text, center_x, center_y, double=False):
     height   = font_data.font.height   * scale
     width    = getTextWidth(font_data, text, double=double)
 
-    x = center_x - round(width / 2) 
+    x = center_x - round(width / 2) + 1
     y = center_y + height // 2 - (height - baseline)
 
     return x, y
@@ -157,7 +157,7 @@ def textCoordsRight(font_data, text, right_x, y, double=False):
     height   = font_data.font.height   * scale
     width    = getTextWidth(font_data, text, double=double)
 
-    x = right_x - width
+    x = right_x - width + 1
     y = y + height // 2 - (height - baseline)
 
     return x, y
@@ -173,7 +173,7 @@ def textCoordsLeft(font_data, text, left_x, y, double=False):
     baseline = font_data.font.baseline * scale
     height   = font_data.font.height   * scale
 
-    x = left_x
+    x = left_x + 1
     y = y + height // 2 - (height - baseline)
 
     return x, y
