@@ -6,14 +6,16 @@
 # Hardware Settings
 # ------------------------------------------------------------
 hardware:
-  rows: 32                        # LED panel row count (32 or 64)
-  cols: 64                        # LED panel column count (64 typical)
-  chained: 2                      # Number of panels chained together
+  rows: 32                         # LED panel row count (32 or 64)
+  cols: 64                         # LED panel column count (64 typical)
+  chained: 2                       # Number of panels chained together
   gpio_mapping: "adafruit-hat-pwm" # regular adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
-  led_slowdown_gpio: 4            # Increase if display looks garbled (0-4)
-  brightness: 80                  # 0-100, overall brightness
-  pwm_bits: 8                    # 1-11, color depth (lower = faster refresh)
+  gpio_slowdown: 4             # Increase if display looks garbled (0-4)
+  pwm_lsb_nanoseconds: 130         #
+  brightness: 100                  # 0-100, overall brightness
+  pwm_bits: 4                      # 1-11, color depth (lower = faster refresh)
   rgb_mapping: "GBR"
+  show_refresh_rate: 0             # 1 to show refresh rate
 
 
 # ------------------------------------------------------------

@@ -27,19 +27,36 @@ DISPLAY_INTERVAL = config["display"]["scene_duration"]   # seconds each game is 
 #========== matrix setup ==============
 print("Setting up matrix")
 hardware = config["hardware"]
-
 options = RGBMatrixOptions()
-options.daemon = 0
-options.drop_privileges = 0
 
-options.rows = hardware["rows"]
-options.cols = hardware["cols"]
-options.chain_length = hardware["chained"]
-options.hardware_mapping = hardware["gpio_mapping"]
-options.led_rgb_sequence = hardware["rgb_mapping"]
+# --- hardware mapping ---
+options.hardware_mapping    = hardware["gpio_mapping"]  # you did the solder mod
+options.led_rgb_sequence    = hardware["rgb_mapping"]  # from config.yaml
+
+# --- panel dimensions ---
+options.rows                = hardware["rows"]
+options.cols                = hardware["cols"]
+options.chain_length        = hardware["chained"]
+options.parallel            = 1
+
+# --- scan / addressing ---
+options.scan_mode           = 0
+options.row_address_type    = 0
+options.multiplexing        = 0
+
+# --- signal timing ---
+options.gpio_slowdown       = hardware["gpio_slowdown"]       
+options.pwm_bits            = hardware["pwm_bits"]      
+options.brightness          = hardware["brightness"]
+options.pwm_lsb_nanoseconds = hardware["pwm_lsb_nanoseconds"]
+
+# --- process ---
+options.daemon              = 0
+options.drop_privileges     = False
+options.show_refresh_rate   = hardware["show_refresh_rate"]
 
 matrix = RGBMatrix(options=options)
-canvas = matrix.CreateFrameCanvas() 
+canvas = matrix.CreateFrameCanvas()
 tz = config["display"]["timezone"]
 
 renderer = Renderer(canvas, tz)
