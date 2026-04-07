@@ -17,3 +17,5 @@ utils/.__pycache__/
 **/.__pycache__/
 
 tester.ipynb
+
+.vscode/*
