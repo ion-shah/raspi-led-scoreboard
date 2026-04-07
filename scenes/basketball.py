@@ -27,8 +27,8 @@ class BasketballScene(BaseScene):
                 "team1score": FontArgs(JERSEY20_FONT, BasketballData.team1.score, 55, 16, white, 'r'),
                 "team2score": FontArgs(JERSEY20_FONT, BasketballData.team2.score, 68, 16, white, 'l'),
 
-                "team1abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.team1.abbr), 59, 28, grey, 'r'),
-                "team2abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.team1.abbr), 66, 28, grey, 'l'),
+                "team1abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team1.abbr), 59, 28, grey, 'r'),
+                "team2abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team2.abbr), 66, 28, grey, 'l'),
 
                 "clock": FontArgs(JERSEY20_FONT, BasketballData.displayClock(timezone), 66, 4, grey)
             }
