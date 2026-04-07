@@ -29,6 +29,9 @@ print("Setting up matrix")
 hardware = config["hardware"]
 
 options = RGBMatrixOptions()
+options.daemon = 0
+options.drop_privileges = 0
+
 options.rows = hardware["rows"]
 options.cols = hardware["cols"]
 options.chain_length = hardware["chained"]
