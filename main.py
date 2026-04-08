@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timezone
 from utils.config_loader import loadConfig, getEnabledSports
 from data import fetchScoreboard, refreshGameList, getDisplayList, fetchAndRefresh, buildGameDict, getPollInterval
-from utils import Renderer
+from utils import Renderer, getBrightness
 from scenes import *
 try:
     from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
@@ -94,7 +94,8 @@ try:
                 game_cache = fetchAndRefresh(game_cache, sport, league, config)
             last_poll_time = now
             #print(f"[POLL] cache has {len(game_cache)} games")
-
+            if config["display"]["brightness_schedule"]["enabled"]:
+                matrix.brightness = getBrightness(config)
         # -- Build display list --
         display_list = getDisplayList(game_cache, config)
 
