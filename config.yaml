@@ -12,7 +12,7 @@ hardware:
   gpio_mapping: "adafruit-hat-pwm" # regular adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
   gpio_slowdown: 4                 # Increase if display looks garbled (0-4)
   pwm_lsb_nanoseconds: 300         #
-  brightness: 60                   # 0-100, overall brightness
+  brightness: 70                   # 0-100, overall brightness
   pwm_bits: 7                      # 1-11, color depth (lower = faster refresh)
   rgb_mapping: "GBR"
   show_refresh_rate: 0             # 1 to show refresh rate
@@ -28,7 +28,7 @@ display:
   transition: slide               # slide | fade | cut
   brightness_schedule:
     enabled: true
-    day_brightness: 60            # Brightness during daytime hours
+    day_brightness: 70            # Brightness during daytime hours
     night_brightness: 20          # Brightness at night
     day_start: "09:00"            # Time to switch to day brightness
     night_start: "21:00"          # Time to switch to night brightness
