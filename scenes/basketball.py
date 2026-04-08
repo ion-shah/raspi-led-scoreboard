@@ -9,6 +9,7 @@ class BasketballScene(BaseScene):
     def __init__(self, BasketballData, timezone="UTC"):
         super().__init__()
         self.imgSize = 48
+        self.retroLogos = True #uses alternate logos if available
 
         #each part of the basketball data needs to be added to the class
         self.drawings = {
@@ -25,7 +26,7 @@ class BasketballScene(BaseScene):
                 'center-dash': FontArgs(JERSEY20_FONT, '-', 64, 16, white),
 
                 "team1score": FontArgs(JERSEY20_FONT, BasketballData.team1.score, 55, 16, white, 'r'),
-                "team2score": FontArgs(JERSEY20_FONT, BasketballData.team2.score, 68, 16, white, 'l'),
+                "team2score": FontArgs(JERSEY20_FONT, BasketballData.team2.score, 72, 16, white, 'l'),
 
                 "team1abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team1.abbr), 59, 28, grey, 'r'),
                 "team2abbr": FontArgs(JERSEY20_FONT, getDisplayAbbr(BasketballData.league, BasketballData.team2.abbr), 68, 28, grey, 'l'),
@@ -35,5 +36,5 @@ class BasketballScene(BaseScene):
 
 
     def getLogoPath(self, league, TeamData):
-        return f"assets/imgs/logos/nba/teams/{getDisplayAbbr(league, TeamData.abbr)}.png"
+        return f"assets/imgs/logos/{league}/teams/{getDisplayAbbr(league, TeamData.abbr)}.png"
     
