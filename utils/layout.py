@@ -122,6 +122,14 @@ def drawImage(canvas, img_path, img_size, padding, right_image):
     img = Image.open(img_path).convert('RGB')
     img = img.resize((img_size, img_size), Image.LANCZOS)
 
+    img = Image.open(img_path).convert('RGBA')  # preserve transparency first
+    img = img.resize((img_size, img_size), Image.LANCZOS)
+
+    # composite onto black background — what the matrix displays anyway
+    background = Image.new('RGBA', img.size, (0, 0, 0, 255))
+    background.paste(img, mask=img.split()[3])  # use alpha channel as mask
+    img = background.convert('RGB')
+
     canvas.SetImage(img, x, y) 
 
 def textCoordsCenter(font_data, text, center_x, center_y, double=False):
