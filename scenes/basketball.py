@@ -1,8 +1,9 @@
 # each scene is going to showcase different info depending on the sport,
 # this is the basketball scene, which will show the score, quarter, and cloc
 
-from utils.abbreviations import getDisplayAbbr
+from utils.overrides import getDisplayAbbr, LOGO_OVERRIDES
 from scenes.base_scene import *
+import os
 
 class BasketballScene(BaseScene):
     
@@ -36,5 +37,9 @@ class BasketballScene(BaseScene):
 
 
     def getLogoPath(self, league, TeamData):
-        return f"assets/imgs/logos/{league}/teams/{getDisplayAbbr(league, TeamData.abbr)}.png"
+        displayAbbr = getDisplayAbbr(league, TeamData.abbr)
+        if self.retroLogos and (displayAbbr in LOGO_OVERRIDES[league]):
+            return f"assets/imgs/logos/{league}/teams_alt/{displayAbbr}_{LOGO_OVERRIDES[league][displayAbbr]}.png"
+        else:
+            return f"assets/imgs/logos/{league}/teams/{displayAbbr}.png"
     
