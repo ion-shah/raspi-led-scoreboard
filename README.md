@@ -4,7 +4,7 @@
 A Raspberry Pi powered LED matrix sports scoreboard that displays 
 live scores fetched from ESPN's API onto a HUB75 RGB LED panel.
 
-This project was inspired be the scorebug and ticker that is always present in sports broadcast, and intends to bring that display to life.
+This project was inspired by the scorebug and ticker that is always present in sports broadcast and intends to bring that display to life.
 
 ## Hardware
 
