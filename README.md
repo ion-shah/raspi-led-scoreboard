@@ -1,4 +1,4 @@
-# Raspi LED Scoreboard
+# Raspberry Pi LED Scoreboard
 ![sample image](assets/imgs/sample1.jpeg)
 
 A Raspberry Pi powered LED matrix sports scoreboard that displays 
