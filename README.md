@@ -1,10 +1,10 @@
-# Raspi LED Scoreboard
-![sample image](assets\imgs\sample1.jpeg)
+# Raspberry Pi LED Scoreboard
+![sample image](assets/imgs/sample1.jpeg)
 
 A Raspberry Pi powered LED matrix sports scoreboard that displays 
 live scores fetched from ESPN's API onto a HUB75 RGB LED panel.
 
-This project was inspired be the scorebug and ticker that is always present in sports broadcast, and intends to bring that display to life.
+This project was inspired by the scorebug and ticker that is always present in sports broadcast and intends to bring that display to life.
 
 ## Hardware
 
@@ -50,7 +50,7 @@ It is recommended to make a systemd service so the scoreboard persists on reboot
 - Coming Soon: NFL, MLB, NHL, NCAA 
 
 ### Supported Retro Logos
-| League | Team Abbreivation | Override Key |
+| League | Team Abbreviation | Override Key |
 |--|--| -- |
 | NBA | UTAH | 2004 |
 | NBA | TOR | 1995 |
