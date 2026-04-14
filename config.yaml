@@ -11,10 +11,10 @@ hardware:
   chained: 2                       # Number of panels chained together
   gpio_mapping: "adafruit-hat-pwm" # regular adafruit-hat or adafruit-hat-pwm (if GPIO mod done)
   gpio_slowdown: 4                 # Increase if display looks garbled (0-4)
-  pwm_lsb_nanoseconds: 300         #
+  pwm_lsb_nanoseconds: 300         # Increase on low powered hardware; Changes the time for the least significant bit to send
   brightness: 70                   # 0-100, overall brightness
   pwm_bits: 7                      # 1-11, color depth (lower = faster refresh)
-  rgb_mapping: "GBR"
+  rgb_mapping: "GBR"               # Change if colors seem very off; Certain LED Panels have different RGB mapping
   show_refresh_rate: 0             # 1 to show refresh rate
 
 
@@ -45,7 +45,7 @@ scheduling:
 # ------------------------------------------------------------
 # Sports & Favorite Teams
 # ------------------------------------------------------------
-
+# When a sport is not enabled it will be processed at all
 sports:
   nba:
     enabled: true
@@ -90,3 +90,18 @@ priority:
   pin_threshold: 140        # Games at or above this score pause rotation and display statically
   favorite_leagues:
     - nba 
+
+# ------------------------------------------------------------
+# Logo Overrides
+# ------------------------------------------------------------
+logo_overrides: # Use retro logos instead of current logos
+  nba:
+    UTAH: "2004"
+    TOR:  "1995"
+    DET:  "1996"
+    BKN:  "2003"
+    CLE:  "2016"
+    MEM:  "2001"
+  nfl: {}
+  mlb: {}
+  nhl: {}

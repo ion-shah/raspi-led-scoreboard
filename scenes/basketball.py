@@ -1,7 +1,7 @@
 # each scene is going to showcase different info depending on the sport,
 # this is the basketball scene, which will show the score, quarter, and cloc
 
-from utils.overrides import getDisplayAbbr, LOGO_OVERRIDES
+from utils.overrides import getDisplayAbbr
 from scenes.base_scene import *
 import os
 
@@ -14,8 +14,8 @@ class BasketballScene(BaseScene):
 
         #each part of the basketball data needs to be added to the class
         self.drawings = {
-            "team1img": ImgArgs(self.getLogoPath(BasketballData.league, BasketballData.team1), self.imgSize, -12),
-            "team2img": ImgArgs(self.getLogoPath(BasketballData.league, BasketballData.team2), self.imgSize, -12, right_image=True),
+            "team1img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team1), self.imgSize, -12),
+            "team2img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team2), self.imgSize, -12, right_image=True),
         }
 
         if BasketballData.status == "pre":
@@ -34,12 +34,3 @@ class BasketballScene(BaseScene):
 
                 "clock": FontArgs(SMALL_FONT, BasketballData.displayClock(timezone), 66, 4, grey)
             }
-
-
-    def getLogoPath(self, league, TeamData):
-        displayAbbr = getDisplayAbbr(league, TeamData.abbr)
-        if self.retroLogos and (displayAbbr in LOGO_OVERRIDES[league]):
-            return f"assets/imgs/logos/{league}/teams_alt/{displayAbbr}_{LOGO_OVERRIDES[league][displayAbbr]}.png"
-        else:
-            return f"assets/imgs/logos/{league}/teams/{displayAbbr}.png"
-    

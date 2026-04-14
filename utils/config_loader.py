@@ -74,6 +74,9 @@ def validateConfig(config):
     print("Validating team abbreviations against ESPN API...")
     validateAbbreviations(config)
     print("Validation complete.")
+
+    #validate logo overrides
+    validateLogoOverrides(config)
     
 def validateAbbreviations(config):
     # For each enabled sport, the favorites list is validating for user feedback
@@ -110,6 +113,32 @@ def validateAbbreviations(config):
                 print(f"  WARNING: '{abbr}' in {sport_key} favorites is not a valid "
                       f"ESPN abbreviation. Valid options: {sorted(valid_abbrs)}")
 
+def validateLogoOverrides(config):
+    """
+    Checks that each logo override file exists at the expected exact path.
+    Warns if the file is missing.
+    """
+    overrides = config.get("logo_overrides", {})
+    if not overrides:
+        return
+
+    print("Validating logo overrides...")
+    any_warnings = False
+
+    for league, teams in overrides.items():
+        if not teams:
+            continue
+        for abbr, override_key in teams.items():
+            path = f"assets/imgs/logos/{league}/teams_alt/{abbr}_{override_key}.png"
+            if not os.path.exists(path):
+                print(f"  WARNING: Logo override for {league.upper()} '{abbr}' "
+                      f"expected file not found at: {path}")
+                any_warnings = True
+            else:
+                print(f"  OK: {league.upper()} '{abbr}' -> {path}")
+
+    if not any_warnings:
+        print("All logo overrides validated successfully.")
 
 def getEnabledSports(config):
     # Returns a list of (sport, league) tuples for all enabled sports.

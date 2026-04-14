@@ -6,6 +6,7 @@ except ImportError:
     from RGBMatrixEmulator import RGBMatrix, RGBMatrixOptions, graphics
     
 from bdfparser import Font as BdfFont
+from utils.overrides import getDisplayAbbr
 
 __all__ = [
     "BaseScene",
@@ -69,8 +70,26 @@ class ImgArgs:
 
 #the base scene has the data that corresponds to the Game class
 class BaseScene:
+    #class level var -s shared by all instances
+
+    @classmethod
+    def configure(cls, config):
+        #Call once at startup in main.py to inject config.
+        cls._logo_overrides = config.get("logo_overrides", {})
+
     def __init__(self):
         # drawings is a dict in the form of 
         # {'short_desc' : Args}
         # each subclass will populate it
         self.drawings = {}
+    
+    def _resolve_logo_path(self, league, abbr):
+        display_abbr = getDisplayAbbr(abbr)
+        override     = self._logo_overrides.get(league, {}).get(display_abbr)
+
+        if override:
+            path = f"assets/imgs/logos/{league}/teams_alt/{display_abbr}_{override}.png"
+            if os.path.exists(path):
+                return path
+
+        return f"assets/imgs/logos/{league}/teams/{display_abbr}.png"

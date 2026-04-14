@@ -22,6 +22,7 @@ print( "\n===============================\n"
 
 print("Loading config.yaml...")
 config = loadConfig()
+BaseScene.configure(config)
 print("config.yaml loaded and verified.\n")
 
 DISPLAY_INTERVAL = config["display"]["scene_duration"]   # seconds each game is shown before rotating
