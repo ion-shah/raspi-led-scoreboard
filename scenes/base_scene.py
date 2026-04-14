@@ -84,7 +84,7 @@ class BaseScene:
         self.drawings = {}
     
     def _resolve_logo_path(self, league, abbr):
-        display_abbr = getDisplayAbbr(abbr)
+        display_abbr = getDisplayAbbr(league, abbr)
         override     = self._logo_overrides.get(league, {}).get(display_abbr)
 
         if override:

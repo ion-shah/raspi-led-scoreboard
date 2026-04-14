@@ -130,4 +130,5 @@ try:
         time.sleep(TICK_SPEED)
 
 except KeyboardInterrupt:
+    matrix.Clear()
     print("Program stopped by user")

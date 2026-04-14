@@ -14,8 +14,8 @@ class BasketballScene(BaseScene):
 
         #each part of the basketball data needs to be added to the class
         self.drawings = {
-            "team1img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team1), self.imgSize, -12),
-            "team2img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team2), self.imgSize, -12, right_image=True),
+            "team1img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team1.abbr), self.imgSize, -12),
+            "team2img": ImgArgs(self._resolve_logo_path(BasketballData.league, BasketballData.team2.abbr), self.imgSize, -12, right_image=True),
         }
 
         if BasketballData.status == "pre":
