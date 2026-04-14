@@ -50,7 +50,7 @@ It is recommended to make a systemd service so the scoreboard persists on reboot
 - Coming Soon: NFL, MLB, NHL, NCAA 
 
 ### Supported Retro Logos
-| League | Team Abbreivation | Override Key |
+| League | Team Abbreviation | Override Key |
 |--|--| -- |
 | NBA | UTAH | 2004 |
 | NBA | TOR | 1995 |
