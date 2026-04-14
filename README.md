@@ -1,4 +1,5 @@
 # Raspi LED Scoreboard
+![sample image](assets\imgs\sample1.jpeg)
 
 A Raspberry Pi powered LED matrix sports scoreboard that displays 
 live scores fetched from ESPN's API onto a HUB75 RGB LED panel.
