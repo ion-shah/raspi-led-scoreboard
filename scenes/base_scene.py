@@ -7,6 +7,7 @@ except ImportError:
     
 from bdfparser import Font as BdfFont
 from utils.overrides import getDisplayAbbr
+import os
 
 __all__ = [
     "BaseScene",
