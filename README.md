@@ -65,3 +65,5 @@ It is recommended to make a systemd service so the scoreboard persists on reboot
 - Thank you to `gidger/rpi-led-sports-scoreboard/` and `ChuckBuilds/LEDMatrix/` for their projects. These projects are really well made, and helped guide my own development process and I would recommend checking these out as they might serve your use case better.
 
 - Thank you to `pseudo-r/Public-ESPN-API` and ESPN for the unofficial API for sports data. The pseudo-r repo has very strong doucmentation about the API and it is highly recommended.
+
+- Thank you to `https://football-logos.cc/` for the football/soccer images
