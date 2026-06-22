@@ -1,10 +1,12 @@
 from scenes.base_scene import *
 from scenes.basketball import BasketballScene
 from scenes.clock import ClockScene
+from scenes.soccer import SoccerScene
 
 #====get the correct scene, based on the sport====
 SCENE_REGISTRY = {
     'nba': BasketballScene,
+    'fifa.world': SoccerScene, #... add as functionality expands
     'mlb': None, #... add as functionality expands
     'clock': ClockScene
 }

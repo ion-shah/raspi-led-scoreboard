@@ -2,10 +2,12 @@
 
 from data.models.base_models import Game
 from data.models.basketball_model import BasketballGame
+from data.models.soccer_model import SoccerGame
 from utils.time_utils import parseDate
 
 LEAGUE_SPORT_MAP = {
-    "basketball" : ["nba", "mens-college-basketball"]
+    "basketball" : ["nba", "mens-college-basketball"],
+    "soccer": ["fifa.world"]
     # add more sports as functionality expands
 }
                 
@@ -34,6 +36,9 @@ def buildGame(event, sport, league):
     if league in LEAGUE_SPORT_MAP.get("basketball", []):
         return _buildBasketballGame(comp, base_args)
     
+    if league in LEAGUE_SPORT_MAP.get("soccer", []):
+        return _buildSoccerGame(comp, base_args)
+    
 
     return Game(**base_args) #return generic Game if no sport-specific class exists
 
@@ -52,6 +57,18 @@ def _buildBasketballGame(comp, base_args):
         timeDesc = timeDesc
     )
 
+def _buildSoccerGame(comp, base_args):
+    status_block = comp["status"]
+    period   = status_block.get("period", 0)
+    clock    = status_block.get("displayClock", "")
+    timeDesc = status_block.get("type", {}).get("description", "")
+
+    return SoccerGame(
+        **base_args,
+        period    = period,
+        clock     = clock,
+        timeDesc = timeDesc
+    )
 
 # ==============================
     

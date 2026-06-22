@@ -13,6 +13,7 @@ SPORT_MAP = {
         "college-football":    ("football",   "college-football"),
         "college-basketball":  ("basketball", "mens-college-basketball"),
         "college-baseball":  ("baseball",   "college-baseball"),
+        "fifa.world":             ("soccer",     "fifa.world")
     }
 
 def loadConfig(path=CONFIG_PATH):

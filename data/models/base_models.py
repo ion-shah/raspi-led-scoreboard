@@ -46,6 +46,10 @@ class Game(ImportanceMixin, object):
 
         now = datetime.now(timezone.utc) 
 
+        #ensures stale games are not shown, 
+        if self.startTime and (now - self.startTime).days >= 2:
+            return False
+
         if self.status == "in":
             return True
 
@@ -73,7 +77,7 @@ class Game(ImportanceMixin, object):
         self.team2.score = newt2score
 
         newStatus = comp["status"]["type"]["state"]
-        if newStatus == "post" and self.status != "post":
+        if newStatus == "post" and self.endTime is None:
             self.markEnded()
         self.status = newStatus
     
