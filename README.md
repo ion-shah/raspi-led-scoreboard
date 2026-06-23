@@ -47,17 +47,19 @@ It is recommended to make a systemd service so the scoreboard persists on reboot
 
 ## Supported Sports
 - NBA 
+- FIFA World Cup
 - Coming Soon: NFL, MLB, NHL, NCAA 
 
 ### Supported Retro Logos
 | League | Team Abbreviation | Override Key |
 |--|--| -- |
-| NBA | UTAH | 2004 |
 | NBA | TOR | 1995 |
 | NBA | DET | 1996 |
-| NBA | BKN | 2003 |
-| NBA | CLE | 2016 |
 | NBA | MEM | 2001 |
+| NBA | BKN | 2003 |
+| NBA | UTAH | 2004 |
+| NBA | CLE | 2016 |
+| NBA | MIN | 2017 |
 
 ## Credits
 - Major credits to `hzeller/rpi-rgb-led-matrix` for the display driver, the repo is installed as a submodule and I highly recommend reading through this repo to understand creating the display better. All of the display side is handled by this repo, and the project would not be possible otherwise.
